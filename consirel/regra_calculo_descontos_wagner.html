@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet" href="normalize.css/normalize.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto:wght@300;400;500&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="../style.css">
+
+    <title>CONSIREL - Calcula Desconto: quitação ou por em dia</title>
+
+</head>
+
+<body>
+
+    <p id="resultado-casoQuitacao" class="cor displayNone"></p>
+
+    <p id="resultado-casoPorEmDia" class="cor displayNone"></p>
+
+    <button id="btnLimpaTela1" class="displayNone">Limpa Tela</button>
+    <button id="btnLimpaTela2" class="displayNone">Limpa Tela</button>
+
+    <div id="container">
+
+        <a href="https://www.consirel.com"><img src="../logo_Consirel.png" alt="Logo"></a>
+        <br><br><br>
+
+
+        <div id="selecione">
+            <h2>Selecione:</h2>
+
+            <select onclick="display()" name="" id="mySelect">
+                <option value="###" selected></option>
+                <option value="quitacao">Simulação: p/ QUITAÇÃO</option>
+                <option value="porEmDia">Simulação: p/ POR EM DIA</option>
+            </select>
+        </div>
+        <br><br><br>
+
+
+        <!--PARA CALCULO DE DESCONTO P/ QUITAÇÃO-->
+        <div id="casoQuitacao" class="displayNone">
+
+            <p class="bold">
+                Digite o No. de PARCELAS do CONTRATO:
+            </p>
+            <input type="number">
+
+            <p class="bold">
+                Digite o No. de PARCELAS que FALTAM:
+            </p>
+            <input type="number">
+
+            <p class="bold">
+                Digite o VALOR À VENCER:
+            </p>
+            <input type="number">
+
+            <br><br>
+
+            <button id="btn-casoQuitacao">Calcular</button>
+
+            <br><br><br>
+
+        </div>
+
+        <!--PARA CALCULO DE DESCONTO P/ POR EM DIA-->
+        <div id="casoPorEmDia" class="displayNone">
+
+            <p class="bold">Digite o No. de PARCELAS do CONTRATO:</p>
+            <input type="number">
+
+            <p class="bold">Digite o No. de PARCELAS ATRASADAS:</p>
+            <input type="number">
+
+            <p class="bold">Digite o VALOR PRINCIPAL atrasado:</p>
+            <input type="number">
+
+            <fieldset>
+                <p class="bold">Digite o Valor do JUROS:</p>
+                <input type="number">
+
+                <p class="bold">Digite o Valor da MULTA:</p>
+                <input type="number">
+
+                <input class="checkboxAjuste" type="checkbox"> <span class="bold">É um cliente bom?</span>
+            </fieldset>
+
+
+            <br><br><br>
+
+            <button id="btn-casoPorEmDia">Calcular</button>
+
+            <br><br><br>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        const fatorTabela = 0.5963224 // USADO P/ REFERENCIA P/ REGRA DE DESCONTO VS FATOR JUROS FINANCIAMENTO
+        const fatorDescontoMaior = fatorTabela * (1 / 2) // No. Parcelas a VENCER >= a METADE do No. parcelas CONTRATO
+        const fatorDescontoMenor = fatorTabela * (1 / 4) // No. Parcelas a VENCER < a METADE do No. parcelas CONTRATO
+
+        function $(elemento) {
+            return document.querySelector(elemento)
+        }
+
+        function display() {
+
+            if ($("#mySelect").selectedIndex == 1) {
+                $("#casoQuitacao").classList.toggle("displayNone")
+                document.getElementsByTagName("input")[0].focus()
+
+            } else if ($("#mySelect").selectedIndex == 2) {
+                $("#casoPorEmDia").classList.toggle("displayNone")
+                document.getElementsByTagName("input")[3].focus()
+            }
+        }
+
+        function calculaDesconto(numParcelas, fatorDesconto) {
+            let desconto = numParcelas * fatorDesconto
+            return desconto
+        }
+
+        function calculaValorQuitacao(valor, desconto) {
+            valorQuitacao = valor - valor * (desconto) / 100
+            return valorQuitacao
+        }
+
+        function escreveResultado(nParcelasContrato, nParcelasFaltam, valor_a_vencer, valorQuitacao, nome, desconto) {
+
+            return `
+
+<h3><u>MEMÓRIA DE CALCULO:</u></h3>
+
+No. Parcelas Contrato = ${nParcelasContrato} <br>
+No. Parcelas FALTAM = ${nParcelasFaltam} <br>
+Valor A VENCER = R$ ${valor_a_vencer.toLocaleString("pt-BR")} <br>  
+
+<h2>VALOR P/ QUITAÇÃO = R$ ${valorQuitacao.toLocaleString("pt-br", { maximumFractionDigits: 2 })}</h2>
+<h3>Cliente: ${nome.toUpperCase()}</h3>
+
+<br><br><br><br><br>
+<hr>
+O desconto foi de: ${desconto.toFixed(2)}%, R$ ${(valor_a_vencer * desconto / 100).toLocaleString("pt-br", { maximumFractionDigits: 2 })} <br>
+<i>desconto ao ano*** = ${(desconto / (nParcelasFaltam / 12)).toFixed(2)}%</i><br><br>
+
+<i>Falta MAIS que a metade das parcelas do contrato? ${(nParcelasFaltam > nParcelasContrato / 2) ? "SIM" : "não"}</i><br>
+<i>Falta MENOS que a metade das parcelas do contrato? ${(nParcelasFaltam < nParcelasContrato / 2) ? "SIM" : "não"}</i><br>
+<i>Falta IGUAL a metade das parcelas do contrato? ${(nParcelasFaltam == nParcelasContrato / 2) ? "SIM" : "não"}</i><br>
+
+`
+        }
+
+        $("#btnLimpaTela1").addEventListener("click", () => {
+            document.getElementById("resultado-casoQuitacao").classList.toggle("displayNone")
+            document.getElementById("btnLimpaTela1").classList.toggle("displayNone")
+
+            document.getElementById("container").classList.toggle("displayNone")
+
+
+        })
+
+        $("#btn-casoQuitacao").addEventListener("click", () => {
+
+            document.documentElement.scrollTop = 0 /*Pra rolar a tela pro topo*/
+
+            document.getElementById("container").classList.toggle("displayNone")
+
+            document.getElementById("resultado-casoQuitacao").classList.toggle("displayNone")
+            document.getElementById("btnLimpaTela1").classList.toggle("displayNone")
+
+
+            let nome = prompt("Digite o nome do cliente")
+
+            let nParcelasContrato = parseInt(document.getElementsByTagName("input")[0].value)
+            let nParcelasFaltam = parseInt(document.getElementsByTagName("input")[1].value)
+            let valor_a_vencer = parseFloat(document.getElementsByTagName("input")[2].value)
+
+            let metadeParcelasContrato = nParcelasContrato / 2
+
+
+            if (nParcelasFaltam >= metadeParcelasContrato && nParcelasFaltam <= nParcelasContrato) {
+
+                let desconto = calculaDesconto(nParcelasFaltam, fatorDescontoMaior)
+                let valor = calculaValorQuitacao(valor_a_vencer, desconto)
+
+                $("#resultado-casoQuitacao").style.color = "black"
+                $("#resultado-casoQuitacao").style.backgroundColor = "rgb(0,0,255,0.25)"
+
+                $("#resultado-casoQuitacao").innerHTML = escreveResultado(nParcelasContrato, nParcelasFaltam, valor_a_vencer, valorQuitacao, nome, desconto)
+
+
+
+            } else if (nParcelasFaltam <= metadeParcelasContrato && nParcelasFaltam <= nParcelasContrato) {
+
+                let desconto = calculaDesconto(nParcelasFaltam, fatorDescontoMenor)
+                let valor = calculaValorQuitacao(valor_a_vencer, desconto)
+
+                $("#resultado-casoQuitacao").style.color = "black"
+                $("#resultado-casoQuitacao").style.backgroundColor = "rgb(0,0,255,0.25)"
+
+                $("#resultado-casoQuitacao").innerHTML = escreveResultado(nParcelasContrato, nParcelasFaltam, valor_a_vencer, valorQuitacao, nome, desconto)
+
+            } else {
+                $("#resultado-casoQuitacao").style.color = "white"
+                $("#resultado-casoQuitacao").style.backgroundColor = "black"
+                $("#resultado-casoQuitacao").innerHTML = "<h1>---> ERRO!!!</h1>"
+
+            }
+
+        })
+
+        //####################################################################################################
+
+        function escreveResultado2(valorPrincipalAtrasado, valorJuros, valorMulta, nParcelasContrato, nParcelasAtrasadas, valorFinal, nome, clienteBom, desconto) {
+            return `
+            
+            MEMÓRIA DE CALCULO: <br>
+            <br><br>
+
+            VALOR PRINCIPAL ATRASADO = R$ ${valorPrincipalAtrasado.toLocaleString("pt-BR")} <br>
+            No. PARCELAS DO CONTRATO = ${nParcelasContrato} <br>  
+            No. PARCELAS DO ATRASADAS = ${nParcelasAtrasadas} <br>  
+            VALOR JUROS = R$ ${valorJuros.toLocaleString("pt-BR")} <br>
+            VALOR MULTA = R$ ${valorMulta.toLocaleString("pt-BR")} <br>
+            R$ ${(valorJuros + valorMulta).toLocaleString("pt-BR", { maximumFractionDigits: 2 })} = Juros + Multa<br>
+
+            <h2>VALOR P/ POR EM DIA = R$ ${valorFinal.toLocaleString("pt-br", { maximumFractionDigits: 2 })}</h2>
+            <h3>Cliente: ${nome.toUpperCase()}</h3>
+
+            <br><br><br><br><br>
+            <hr>
+            <i>O desconto foi de: ${(desconto * 100).toFixed(2)}%, R$ ${((valorJuros + valorMulta) * desconto).toLocaleString("pt-br", { maximumFractionDigits: 2 })}</i><br>
+            <i>O novo valor de juros e multa é de R$ ${((valorJuros + valorMulta) - ((valorJuros + valorMulta) * desconto)).toLocaleString("pt-BR", { maximumFractionDigits: 2 })}</i><br><br>
+            <i>Checkbox?*** ${clienteBom ? "SIM" : "NÃO"}</i><br>
+            <i>Desconto ${desconto.toFixed(2)}</i><br>
+
+            `
+        }
+
+        $("#btnLimpaTela2").addEventListener("click", () => {
+            document.getElementById("resultado-casoPorEmDia").classList.toggle("displayNone")
+            document.getElementById("btnLimpaTela2").classList.toggle("displayNone")
+
+            document.getElementById("container").classList.toggle("displayNone")
+
+        })
+
+        $("#btn-casoPorEmDia").addEventListener("click", () => {
+
+            document.documentElement.scrollTop = 0 /*Pra rolar a tela pro topo*/
+
+            document.getElementById("container").classList.toggle("displayNone")
+
+            document.getElementById("resultado-casoPorEmDia").classList.toggle("displayNone")
+            document.getElementById("btnLimpaTela2").classList.toggle("displayNone")
+
+
+            let nome = prompt("Digite o nome do cliente")
+
+            let nParcelasContrato = parseInt(document.getElementsByTagName("input")[3].value)
+            let nParcelasAtrasadas = parseInt(document.getElementsByTagName("input")[4].value)
+            let valorPrincipalAtrasado = parseFloat(document.getElementsByTagName("input")[5].value)
+            let valorJuros = parseFloat(document.getElementsByTagName("input")[6].value)
+            let valorMulta = parseFloat(document.getElementsByTagName("input")[7].value)
+
+
+            let clienteBom = document.getElementsByTagName("input")[8].checked
+
+            let fator = nParcelasAtrasadas / nParcelasContrato
+
+            let desconto;
+
+            $("#resultado-casoPorEmDia").style.color = "black"
+
+
+            if (nParcelasAtrasadas <= nParcelasContrato) {
+                if (clienteBom == true) { // CLIENTE BOM TEM MAIS DESCONTO
+
+
+                    if (fator > 0.5) { /*SÓ SE O CLIENTE TIVER COM MAIS DE 50% DO CONTRATO ATRASADO*/
+                        desconto = 0.5 // DESCONTO MÁXIMO DE 50%
+                    } else if (nParcelasAtrasadas <= 3) {
+                        desconto = 0
+                    } else {
+                        desconto = fator * 0.75 // x0.75, é igual a 75% do fator
+                    }
+                    $("#resultado-casoPorEmDia").style.backgroundColor = "rgba(0,255,0,0.15)"
+
+                }
+                if (clienteBom == false) { // O DESCONTO É MENOR PRA CLIENTE QUE NÃO É BOM
+
+                    if (fator > 0.5) { /*SÓ SE O CLIENTE TIVER COM MAIS DE 50% DO CONTRATO ATRASADO*/
+                        desconto = 0.3 // DESCONTO MÁXIMO DE 30%
+                    } else if (nParcelasAtrasadas <= 3) {
+                        desconto = 0
+                    } else {
+                        desconto = fator * 0.5 // x0.5, é igual a metade do fator
+                    }
+                    $("#resultado-casoPorEmDia").style.backgroundColor = "rgba(255,0,0,0.15)"
+
+                }
+            } else {
+                $("#resultado-casoPorEmDia").style.color = "white"
+                $("#resultado-casoPorEmDia").style.backgroundColor = "black"
+                $("#resultado-casoPorEmDia").innerHTML = "<h1>---> ERRO!!!</h1>"
+            }
+
+            let valorFinal = valorPrincipalAtrasado + (valorJuros + valorMulta) - (valorJuros + valorMulta) * desconto
+
+            $("#resultado-casoPorEmDia").innerHTML = escreveResultado2(valorPrincipalAtrasado, valorJuros, valorMulta, nParcelasContrato, nParcelasAtrasadas, valorFinal, nome, clienteBom, desconto)
+
+        })
+
+    </script>
+</body>
+
+</html>

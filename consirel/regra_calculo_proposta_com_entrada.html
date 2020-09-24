@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="normalize.css/normalize.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto:wght@300;400;500&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="../style.css">
+
+    <title>Calculo - Proposta Com Entrada</title>
+</head>
+
+<body>
+
+    <div id="containerGrande">
+
+        <a href="https://www.consirel.com"><img src="../logo_Consirel.png" alt="Logo"></a>
+
+        <p id="resultado"></p>
+
+
+        <fieldset>
+            <legend>Calculo - Proposta Com Entrada</legend>
+            <form name="formCalculo" action="">
+                <h4>
+                    Valor:
+                </h4>
+                <input name="inputValorAvista" type="number" placeholder="Digite o Valor Avista do lote"
+                    autocomplete="off">
+
+                <h4>
+                    Entrada:
+                </h4>
+                <input name="inputEntrada" type="number"
+                    placeholder="Digite o valor total da entrada: corretor + Consirel" autocomplete="off">
+                <br>
+                <select name="selectParcelas" id="">
+                    <option value="1.06618500">12x</option>
+                    <option value="1.12976400">24x</option>
+                    <option value="1.19571800">36x</option>
+                    <option value="1.26402500">48x</option>
+                    <option value="1.33466700">60x</option>
+                    <option value="1.40761400">72x</option>
+                    <option value="1.48282900">84x</option>
+                    <option value="1.56027400">96x</option>
+                    <option value="1.63990500">108x</option>
+                    <option value="1.72164600">120x</option>
+                </select>
+            </form>
+            <button id="btn">Calcular</button>
+        </fieldset>
+
+    </div>
+    <script>
+
+        document.getElementsByTagName("input")[0].focus()
+
+        function calculaComEntrada(valor, entrada, numParcelas, fator) {
+            return ((valor - entrada) / numParcelas) * fator
+
+        }
+
+        let button = document.querySelector("button")
+        button.addEventListener("click", () => {
+
+
+            let valorAvista = parseFloat(formCalculo.inputValorAvista.value)
+            console.log("Valor Avista: ", valorAvista)
+
+            let entrada = parseFloat(formCalculo.inputEntrada.value)
+            console.log("Entrada: ", entrada)
+
+            let x = formCalculo.selectParcelas.selectedIndex
+            console.log("Index Select: ", x)
+
+            let fator = document.getElementsByTagName("option")[x].value
+            console.log("Fator: ", fator)
+
+            let numParcelas;
+
+            if (x == 0) { numParcelas = 12 }
+            if (x == 1) { numParcelas = 24 }
+            if (x == 2) { numParcelas = 36 }
+            if (x == 3) { numParcelas = 48 }
+            if (x == 4) { numParcelas = 60 }
+            if (x == 5) { numParcelas = 72 }
+            if (x == 6) { numParcelas = 84 }
+            if (x == 7) { numParcelas = 96 }
+            if (x == 8) { numParcelas = 108 }
+            if (x == 9) { numParcelas = 120 }
+
+            if (isNaN(valorAvista) || isNaN(entrada)) {
+                alert("Preencha TODOS os campos")
+            } else if (entrada > valorAvista) {
+                alert("O VALOR DA ENTRADA ESTÁ MAIOR QUE VALOR A VISTA")
+            } else if (entrada <= 0) {
+                alert("A ENTRADA NÃO PODE SER ZERO")
+            }
+            else {
+                document.getElementById("resultado").innerHTML = `
+            <h2>O valor da PARCELA será de: R$ ${calculaComEntrada(valorAvista, entrada, numParcelas, fator).toLocaleString("pt-BR", { maximumFractionDigits: 2 })}</h2>
+            `
+            }
+
+        })
+
+    </script>
+</body>
+
+</html>

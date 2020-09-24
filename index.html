@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="normalize.css/normalize.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto:wght@300;400;500&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+
+    <title>Login - Grupo Rezende</title>
+</head>
+
+<body>
+
+    <div id="containerLogin">
+
+        <a href="https://www.consirel.com"><img src="logo_Consirel.png" alt="Logo"></a>
+
+        <form name=formLogin>
+
+            <h2>
+                Área restrita:
+            </h2>
+
+
+            <input type=text name=username placeholder="Seu nome de usuário">
+
+            <input type=password name=password placeholder="Sua senha">
+
+            <input class="btnArredando" type=button value="Entrar" onClick="Login()">
+
+        </form>
+
+        <a href="http://api.whatsapp.com/send?1=pt_BR&phone=55859988364978">Esqueci minha senha</a>
+
+    </div>
+
+    <script>
+        document.getElementsByTagName("input")[0].focus()
+        function Login() {
+            var done = 0;
+            var username = formLogin.username.value;
+            username = username.toLowerCase();
+            var password = formLogin.password.value;
+            password = password.toLowerCase();
+            if (username == "") { alert("Preencha o campo: Seu nome de usuário"); done = 1; formLogin.username.focus() }
+            if (password == "") { alert("Preencha o campo: Sua senha"); done = 1; formLogin.password.focus() }
+            if (username == "rezende" && password == "555") { window.location = "diretoria/index.html"; done = 1; }
+            if (username == "larissa" && password == "555") { window.location = "diretoria/index.html"; done = 1; }
+            if (username == "wagner" && password == "wagner1154") { window.location = "consirel/index.html"; done = 1; }
+            if (username == "dinho" && password == "dinho1154") { window.location = "gas/index.html"; done = 1; }
+            if (done == 0) { alert("Senha ou Usuário inválido."); formLogin.username.value = ""; formLogin.password.value = "" }
+        }
+    </script>
+</body>
+
+</html>

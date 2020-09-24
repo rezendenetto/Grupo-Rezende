@@ -1,0 +1,179 @@
+body {
+    background-color: gray;
+    font-family: "Roboto", sans-serif;
+    text-align: center; /*PRA CENTRALIZAR TODOS OS TEXTOS E IMAGENS*/
+}
+
+#container {
+    width: 25%;
+    margin: 0 auto;
+    padding: 15px;
+}
+
+#containerLogin,
+#containerGrande {
+    /* width: 100%; */
+    margin: 0 auto;
+    padding: 15px;
+}
+
+#resultado {
+    background-color: red;
+}
+
+.displayNone {
+    display: none;
+}
+
+.checkboxAjuste {
+    display: inline;
+    margin: 0;
+    padding: 0;
+}
+
+h2 {
+    margin-top: 15px;
+    margin-bottom: 50px;
+    color: white;
+}
+
+h4 {
+    color: white;
+    text-align: left;
+}
+
+p {
+    color: #fff;
+    text-align: left;
+}
+
+span {
+    color: #fff;
+}
+
+img {
+    /* margin: auto; */ /*NÃO PRECISA, FOI FEITO COM TEX-ALIGN NO BODY*/
+    width: 7rem;
+}
+
+form {
+    padding-top: 15px;
+    padding-left: 25%;
+    padding-right: 25%;
+}
+
+input {
+    display: block; /*É uma Opção Melhor do que usar a tag <BR> no HTML*/
+    width: 100%;
+    margin-bottom: 50px;
+    background-color: transparent; /*Background fica TRANSPARENTE*/
+    border: none; /*Pra tirar as bordas padrão input*/
+    border-bottom: 1px solid #fff; /*Adicionar borda apenas embaixo*/
+    padding: 15px;
+    font-size: 24px;
+    color: #fff;
+}
+
+fieldset {
+    width: 50%;
+    margin: 25px auto;
+}
+
+#casoPorEmDia fieldset {
+    width: 100%;
+}
+
+fieldset input {
+    margin-bottom: 35px;
+    padding: 0;
+}
+
+fieldset legend {
+    /* background-color: red; */
+    color: white;
+}
+
+fieldset select,
+fieldset option {
+    width: 100%;
+    font-size: 18px;
+    margin-bottom: 50px;
+}
+
+::-webkit-input-placeholder {
+    /*ACABA SENDO UMA GAMBIARRA?*/
+    /*USAR UM PSEUDO ELEMENTO, que é o webkit é pro CHROME, mas também existe algo semelhante pra IE e Firefox*/
+    color: #fff;
+    font-family: "Roboto", sans-serif;
+    font-size: 24px;
+    font-weight: 300;
+}
+
+fieldset ::-webkit-input-placeholder {
+    color: #ccc;
+    font-size: 12px;
+}
+
+/* Chrome, Safari, Edge, Opera */
+/*ESCONDE AS "SETAS" INPUT NUMBER*/
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+button,
+.btnArredando,
+#btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 50px;
+    background-color: #fff;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.5);
+    border-radius: 3px;
+    border: none; /*RETIRAR A BORDAR QUE JÁ VEM COMO PADRÃO NA TAG BUTTON*/
+    font-size: 18px;
+    font-weight: 500;
+    color: #39393a;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+}
+
+.btnArredando {
+    border-radius: 40px;
+}
+
+button:hover,
+.btnArredando:hover,
+#btn:hover {
+    background-color: #c15c5c;
+}
+
+#container a {
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 400;
+    color: #000000;
+}
+
+#containerLogin a {
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 400;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
+    color: #fff;
+}
+
+select {
+    padding: 5px;
+    font-size: 18px;
+    background-color: #ccc;
+}
+
+@media (max-width: 500px) {
+    #container {
+        width: 75%;
+    }
+}
