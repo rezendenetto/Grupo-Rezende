@@ -1,17 +1,19 @@
 body {
+    margin-top: 10%;
     background-color: gray;
     font-family: "Roboto", sans-serif;
     text-align: center; /*PRA CENTRALIZAR TODOS OS TEXTOS E IMAGENS*/
+    background-image: url(logo_Consirel.png);
+    background-position: center;
+    background-position-y: 100px;
+    background-repeat: no-repeat;
+    background-size: contain;
 }
 
 .container-home {
-    width: 25%;
+    width: 35%;
     margin: 0 auto;
     padding: 15px;
-}
-
-span {
-    color: #fff;
 }
 
 img {
@@ -45,4 +47,37 @@ a {
     font-size: 16px;
     font-weight: 400;
     color: #000000;
+}
+
+.container-acesso-restrito {
+    width: 35%;
+    margin: auto;
+}
+
+.container-acesso-restrito a {
+    color: white;
+    font-weight: 300;
+    font-size: 12px;
+}
+.container-acesso-restrito a:hover {
+    font-size: 18px;
+}
+
+.btn-acesso-restrito:hover {
+    /* background-color: #fff; */
+}
+
+.btn-acesso-restrito {
+    background-color: transparent;
+    border: 1px solid #c15c5c;
+    box-shadow: 0 0 0;
+    border-radius: 20px;
+}
+
+.acesso-restrito {
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 400;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
+    color: #fff;
 }
