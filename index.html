@@ -9,53 +9,43 @@
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto:wght@300;400;500&display=swap"
         rel="stylesheet">
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="favicon-consirel.png" type="image/png">
 
-    <title>Login - Grupo Rezende</title>
+    <link rel="stylesheet" href="style-home.css">
+
+    <title>Home</title>
 </head>
 
 <body>
 
-    <div id="containerLogin">
+    <header>
+        <div class="container-home">
+            <h1>
+                <span>Logo</span>
+            </h1>
+            <nav>
+                <ul>
+                    <li><a href="acesso_restrito/index.html">Acesso Restrito</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-        <a href="https://www.consirel.com"><img src="logo_Consirel.png" alt="Logo"></a>
+    <section id="home">
 
-        <form name=formLogin>
+        <img src="logo_Consirel.png" alt="">
 
-            <h2>
-                Área restrita:
-            </h2>
+        <div class="container-home">
+            <button><a href="https://airtable.com/shr2GS1XQbypYpHgf">Fazer RESERVA</a></button>
+            <button><a href="https://airtable.com/shrMIzkQHjbKb9oRe">TABELA DE VENDAS - MVC I</a></button>
+            <button><a href="https://airtable.com/shrfryVR4Lg1YnHRf">TABELA DE VENDAS - MVC II</a></button>
+            <button><a href="https://airtable.com/shrHY6SnhL8sKpfe0">- Reservas Ativas -</a></button>
+            <button><a href="https://app.powerbi.com/view?r=eyJrIjoiZDIwODMxNzUtMGNlMi00MTUxLWE2MDctMzFkNzU3MDVjYzU4IiwidCI6IjNjYmMxMjIyLTRhZDMtNDhlMi1hNWM1LTE4ODYyYjU2NGQ1ZiJ9&pageName=ReportSection5ee124d08dea6362135b
+                ">Mapa de Disponibilidade</a></button>
+        </div>
 
+    </section>
 
-            <input type=text name=username placeholder="Seu nome de usuário">
-
-            <input type=password name=password placeholder="Sua senha">
-
-            <input class="btnArredando" type=button value="Entrar" onClick="Login()">
-
-        </form>
-
-        <a href="http://api.whatsapp.com/send?1=pt_BR&phone=55859988364978">Esqueci minha senha</a>
-
-    </div>
-
-    <script>
-        document.getElementsByTagName("input")[0].focus()
-        function Login() {
-            var done = 0;
-            var username = formLogin.username.value;
-            username = username.toLowerCase();
-            var password = formLogin.password.value;
-            password = password.toLowerCase();
-            if (username == "") { alert("Preencha o campo: Seu nome de usuário"); done = 1; formLogin.username.focus() }
-            if (password == "") { alert("Preencha o campo: Sua senha"); done = 1; formLogin.password.focus() }
-            if (username == "rezende" && password == "555") { window.location = "diretoria/index.html"; done = 1; }
-            if (username == "larissa" && password == "555") { window.location = "diretoria/index.html"; done = 1; }
-            if (username == "wagner" && password == "wagner1154") { window.location = "consirel/index.html"; done = 1; }
-            if (username == "dinho" && password == "dinho1154") { window.location = "gas/index.html"; done = 1; }
-            if (done == 0) { alert("Senha ou Usuário inválido."); formLogin.username.value = ""; formLogin.password.value = "" }
-        }
-    </script>
 </body>
 
 </html>
