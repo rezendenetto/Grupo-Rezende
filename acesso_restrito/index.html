@@ -49,10 +49,10 @@
             password = password.toLowerCase();
             if (username == "") { alert("Preencha o campo: Seu nome de usuário"); done = 1; formLogin.username.focus() }
             if (password == "") { alert("Preencha o campo: Sua senha"); done = 1; formLogin.password.focus() }
-            if (username == "rezende" && password == "555") { window.location = "diretoria/index.html"; done = 1; }
-            if (username == "larissa" && password == "555") { window.location = "diretoria/index.html"; done = 1; }
-            if (username == "wagner" && password == "wagner1154") { window.location = "consirel/index.html"; done = 1; }
-            if (username == "dinho" && password == "dinho1154") { window.location = "gas/index.html"; done = 1; }
+            if (username == "rezende" && password == "555") { window.location = "../diretoria/index.html"; done = 1; }
+            if (username == "larissa" && password == "555") { window.location = "../diretoria/index.html"; done = 1; }
+            if (username == "wagner" && password == "wagner1154") { window.location = "../consirel/index.html"; done = 1; }
+            if (username == "dinho" && password == "dinho1154") { window.location = "../gas/index.html"; done = 1; }
             if (done == 0) { alert("Senha ou Usuário inválido."); formLogin.username.value = ""; formLogin.password.value = "" }
         }
     </script>
