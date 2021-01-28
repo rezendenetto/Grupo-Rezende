@@ -74,6 +74,10 @@ input {
     color: #fff;
 }
 
+label {
+    color: white;
+}
+
 fieldset {
     width: 50%;
     margin: 25px auto;

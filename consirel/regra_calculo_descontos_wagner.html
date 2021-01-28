@@ -59,9 +59,19 @@
             </p>
             <input type="number">
 
-            <br><br>
+            <label class="bold" for="gestor">Tem JUROS E MULTA NO GESTOR?</label>
+
+
+            <select name="gestor" id="gestor" required>
+                <option value="" selected>Selecione</option>
+                <option value="Sim">Sim</option>
+                <option value="Não">Não</option>
+            </select>
+
+            <br><br><br>
 
             <button id="btn-casoQuitacao">Calcular</button>
+
 
             <br><br><br>
 
@@ -128,22 +138,26 @@
             return desconto
         }
 
-        function calculaValorQuitacao(valor, desconto) {
-            valorQuitacao = valor - valor * (desconto) / 100
+        function calculaValorQuitacao(valor, desconto, GESTOR) {
+            valorQuitacao = valor - (valor * desconto / 100)
             return valorQuitacao
         }
 
-        function escreveResultado(nParcelasContrato, nParcelasFaltam, valor_a_vencer, valorQuitacao, nome, desconto) {
+        function escreveResultado(nParcelasContrato, nParcelasFaltam, valor_a_vencer, valorQuitacao, nome, desconto, juros_e_multa_gestor) {
+
 
             return `
 
 <h3><u>MEMÓRIA DE CALCULO:</u></h3>
 
 No. Parcelas Contrato = ${nParcelasContrato} <br>
-No. Parcelas FALTAM = ${nParcelasFaltam} <br>
-Valor A VENCER = R$ ${valor_a_vencer.toLocaleString("pt-BR")} <br>  
+No. Parcelas FALTAM = ${nParcelasFaltam} <br><br>
+Valor A VENCER = R$ ${valor_a_vencer.toLocaleString("pt-BR")} <br>
+Valor A VENCER COM DESCONTO = R$ ${valorQuitacao.toLocaleString("pt-br", { maximumFractionDigits: 2 })} <br><br>
+Juros e Multa no GESTOR = R$ ${juros_e_multa_gestor.toLocaleString("pt-BR")} 
+<br>  
 
-<h2>VALOR P/ QUITAÇÃO = R$ ${valorQuitacao.toLocaleString("pt-br", { maximumFractionDigits: 2 })}</h2>
+<h2>VALOR P/ QUITAÇÃO = R$ ${(valorQuitacao + juros_e_multa_gestor).toLocaleString("pt-br", { maximumFractionDigits: 2 })}</h2>
 <h3>Cliente: ${nome.toUpperCase()}</h3>
 
 <br><br><br><br><br>
@@ -169,6 +183,7 @@ O desconto foi de: ${desconto.toFixed(2)}%, R$ ${(valor_a_vencer * desconto / 10
 
         $("#btn-casoQuitacao").addEventListener("click", () => {
 
+
             document.documentElement.scrollTop = 0 /*Pra rolar a tela pro topo*/
 
             document.getElementById("container").classList.toggle("displayNone")
@@ -176,6 +191,19 @@ O desconto foi de: ${desconto.toFixed(2)}%, R$ ${(valor_a_vencer * desconto / 10
             document.getElementById("resultado-casoQuitacao").classList.toggle("displayNone")
             document.getElementById("btnLimpaTela1").classList.toggle("displayNone")
 
+
+            if ($("#gestor").selectedIndex == 0) {
+
+                return alert("Você precisa informar no seletor logo abaixo, se tem ou não JUROS E MULTA NO GESTOR para que possamos incluir no calculo")
+            }
+
+            if ($("#gestor").selectedIndex == 1) {
+                var juros_e_multa_gestor = parseFloat(prompt("Digite o valor do JUROS+MULTA DO GESTOR"))
+            }
+
+            if ($("#gestor").selectedIndex == 2) {
+                var juros_e_multa_gestor = 0
+            }
 
             let nome = prompt("Digite o nome do cliente")
 
@@ -194,7 +222,7 @@ O desconto foi de: ${desconto.toFixed(2)}%, R$ ${(valor_a_vencer * desconto / 10
                 $("#resultado-casoQuitacao").style.color = "black"
                 $("#resultado-casoQuitacao").style.backgroundColor = "rgb(0,0,255,0.25)"
 
-                $("#resultado-casoQuitacao").innerHTML = escreveResultado(nParcelasContrato, nParcelasFaltam, valor_a_vencer, valorQuitacao, nome, desconto)
+                $("#resultado-casoQuitacao").innerHTML = escreveResultado(nParcelasContrato, nParcelasFaltam, valor_a_vencer, valorQuitacao, nome, desconto, juros_e_multa_gestor)
 
 
 
@@ -206,7 +234,7 @@ O desconto foi de: ${desconto.toFixed(2)}%, R$ ${(valor_a_vencer * desconto / 10
                 $("#resultado-casoQuitacao").style.color = "black"
                 $("#resultado-casoQuitacao").style.backgroundColor = "rgb(0,0,255,0.25)"
 
-                $("#resultado-casoQuitacao").innerHTML = escreveResultado(nParcelasContrato, nParcelasFaltam, valor_a_vencer, valorQuitacao, nome, desconto)
+                $("#resultado-casoQuitacao").innerHTML = escreveResultado(nParcelasContrato, nParcelasFaltam, valor_a_vencer, valorQuitacao, nome, desconto, juros_e_multa_gestor)
 
             } else {
                 $("#resultado-casoQuitacao").style.color = "white"
