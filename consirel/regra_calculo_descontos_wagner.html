@@ -37,6 +37,19 @@
                 <option value="quitacao">Simulação: p/ QUITAÇÃO</option>
                 <option value="porEmDia">Simulação: p/ POR EM DIA</option>
             </select>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <div id="informations" class="">
+                <h3>Simulação: p/ QUITAÇÃO:</h3>
+                <p>Utilizar essa opção para situações em que as parcelas ainda irão vencer, ou em casos em que o cliente
+                    ainda não
+                    pagou nenhuma parcela</p>
+                <h3>Simulação: p/ POR EM DIA</h3>
+                <p>Utilizar em casos em que o cliente deseja por em dia as parcelas já VENCIDAS</p>
+            </div>
         </div>
         <br><br><br>
 
@@ -124,12 +137,16 @@
         function display() {
 
             if ($("#mySelect").selectedIndex == 1) {
+                $("#informations").setAttribute("class", "displayNone")
                 $("#casoQuitacao").classList.toggle("displayNone")
                 document.getElementsByTagName("input")[0].focus()
 
             } else if ($("#mySelect").selectedIndex == 2) {
+                $("#informations").setAttribute("class", "displayNone")
                 $("#casoPorEmDia").classList.toggle("displayNone")
                 document.getElementsByTagName("input")[3].focus()
+            } else if ($("#mySelect").selectedIndex == 0) {
+                $("#informations").removeAttribute("class")
             }
         }
 
