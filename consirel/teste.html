@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="normalize.css/normalize.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto:wght@300;400;500&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="../style.css">
+
+    <title>Calculo - DESCONTO: antecipação/quitação</title>
+</head>
+
+<body>
+
+    <div id="containerGrande">
+
+        <a href="https://www.consirel.com"><img src="../logo_Consirel.png" alt="Logo"></a>
+
+        <div id="resultado">
+        </div>
+
+        <fieldset>
+            <legend>Calculo - DESCONTO: antecipação/quitação</legend>
+            <form name="formCalculo" action="">
+
+                <br>
+
+                <label>
+                    Qual o valor em aberto?
+                    <br>
+                    <input name="inputValorEmAberto" type="number" placeholder="" autocomplete="off">
+                </label>
+
+                <br>
+
+                <label>
+                    Número de parcelas em aberto?
+                    <br>
+                    <input name="inputParcelasEmAberto" type="number" placeholder="" autocomplete="off">
+                </label>
+
+                <br>
+
+            </form>
+
+            <button id="btn">Calcular</button>
+        </fieldset>
+
+    </div>
+    <script>
+
+        const obj = {
+
+            '12': "1.06618500",
+            '24': "1.12976400",
+            '36': "1.19571800",
+            '48': "1.26402500",
+            '60': "1.33466700",
+            '72': "1.40761400",
+            '84': "1.48282900",
+            '96': "1.56027400",
+            '108': "1.63990500",
+            '120': "1.72164600",
+
+        }
+
+
+        let button = document.querySelector("button")
+
+        document.getElementsByTagName("input")[0].focus()
+
+        function calcDesconto(valorEmAberto, fator) {
+            return (valorEmAberto * fator / 2)
+
+        }
+
+        button.addEventListener("click", () => {
+
+
+            let valorEmAberto = parseFloat(formCalculo.inputValorEmAberto.value)
+            console.log("Valor em aberto: ", valorEmAberto)
+
+            let numParcelasEmAberto = parseInt(formCalculo.inputParcelasEmAberto.value)
+            console.log("numParcelasEmAberto: ", numParcelasEmAberto)
+
+            let fatorMinus1 = Number(obj[Math.trunc(numParcelasEmAberto / 12) * 12]) - 1
+            console.log(Math.trunc(numParcelasEmAberto / 12) * 12, 'x');
+            console.log("Fator: ", fatorMinus1)
+            console.log("Fator/2: ", fatorMinus1 / 2)
+
+            const desconto = calcDesconto(valorEmAberto, fatorMinus1)
+            const valorFinal = valorEmAberto - desconto
+
+            if (isNaN(valorEmAberto) || isNaN(numParcelasEmAberto)) {
+                alert("Preencha TODOS os campos")
+            } else if (numParcelasEmAberto <= 0 || numParcelasEmAberto > 120) {
+                alert("Numero de parcelas deve ser entre 1 e 120")
+
+            }
+            else {
+
+                document.getElementById("resultado").innerHTML = `
+                    <br>
+                    <h2 class='respostaTeste'>R$ ${valorEmAberto} - Valor em aberto</h2>
+                    <h2 class='respostaTeste'>R$ ${desconto.toLocaleString("pt-BR", { maximumFractionDigits: 2 })} - Valor desconto</h2>
+                    <h2 class='respostaTeste oi555'>R$ ${valorFinal.toLocaleString("pt-BR", { maximumFractionDigits: 2 })} - Valor Final</h2>
+                    <br>
+                `
+            }
+
+        })
+
+    </script>
+</body>
+
+</html>

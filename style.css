@@ -1,6 +1,6 @@
 body {
     background-color: gray;
-    font-family: "Roboto", sans-serif;
+    font-family: 'Roboto', sans-serif;
     text-align: center; /*PRA CENTRALIZAR TODOS OS TEXTOS E IMAGENS*/
 }
 
@@ -108,7 +108,7 @@ fieldset option {
     /*ACABA SENDO UMA GAMBIARRA?*/
     /*USAR UM PSEUDO ELEMENTO, que é o webkit é pro CHROME, mas também existe algo semelhante pra IE e Firefox*/
     color: #fff;
-    font-family: "Roboto", sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-size: 24px;
     font-weight: 300;
 }
@@ -180,4 +180,16 @@ select {
     #container {
         width: 75%;
     }
+}
+
+.respostaTeste {
+    font-size: 18px;
+    padding: 5px;
+    margin: 5px 0px;
+    margin: auto;
+}
+
+.oi555 {
+    font-size: 28px;
+    background: #000;
 }
